@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 import numpy as np
 __anthor__ = 'Liu jiahui'
 # data = 3.5-3.9 2016
