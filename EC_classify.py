@@ -45,7 +45,7 @@ def main():
     W5 = tf.Variable(tf.truncated_normal([N, 10], stddev=0.1))
     B5 = tf.Variable(tf.ones([10])/10)
 
-# The model
+    # The model
     stride = 1  # output is 28x28
     Y1 = tf.nn.relu(tf.nn.conv2d(X, W1, strides=[1, stride, stride, 1], padding='SAME') + B1)
     stride = 2  # output is 14x14
@@ -53,12 +53,12 @@ def main():
     stride = 2  # output is 7x7
     Y3 = tf.nn.relu(tf.nn.conv2d(Y2, W3, strides=[1, stride, stride, 1], padding='SAME') + B3)
 
-# reshape the output from the third convolution for the fully connected layer
+    # reshape the output from the third convolution for the fully connected layer
     YY = tf.reshape(Y3, shape=[-1, 7 * 7 * M])
 
     Y4 = tf.nn.relu(tf.matmul(YY, W4) + B4)
     Ylogits = tf.matmul(Y4, W5) + B5
-# the result of the predict
+    # the result of the predict
     Y = tf.nn.softmax(Ylogits)
 
     # cross-entropy loss function (= -sum(Y_i * log(Yi)) ), normalised for batches of 100  images
@@ -74,7 +74,6 @@ def main():
     # training step, the learning rate is a placeholder
     # Optimizer that implements the Adam algorithm
     train_step = tf.train.AdamOptimizer(lr).minimize(cross_entropy)
-
     # init
     init = tf.global_variables_initializer()
 
@@ -87,15 +86,12 @@ def main():
     # batch_Y ="input label"
     for i in range(1000):
         batch_X, batch_Y = mnist.train.next_batch(100)
-
-
-    # learning rate decay
+        # learning rate decay
         max_learning_rate = 0.003
         min_learning_rate = 0.0001
         decay_speed = 2000.0
         learning_rate = min_learning_rate + (max_learning_rate - min_learning_rate) * math.exp(-i/decay_speed)
         sess.run(train_step, {X: batch_X, Y_: batch_Y, lr: learning_rate})
-    print("the final accuary is:",accuracy)
-
+    print(accuracy[0])
 if __name__=="__main__":
     main()
