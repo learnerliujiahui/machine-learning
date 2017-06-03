@@ -226,6 +226,7 @@ if __name__ == '__main__':
             hidden_layer = Layer(weights_1, bias_1, np.reshape(vector_train[i, 0:10], (1, K)))
             linear_output_1 = hidden_layer.sum()
             non_linear_output_1 = Sigmoid(linear_output_1)
+
         # forward to the output layer
         # initial the output layer of the ANN
             output_layer = Layer(weights_2, bias_2, non_linear_output_1)
